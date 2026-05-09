@@ -26,3 +26,9 @@ steps:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory))'
+- task: FileTransform@2
+  inputs:
+     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+     enableXmlTransform: false
+     enableJsonTransform: true
+     jsonTargetFiles: '**/appsettings.json'
