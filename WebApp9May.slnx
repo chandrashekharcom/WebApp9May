@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DAL/DAL.csproj" />
+  <Project Path="WebApp9May/WebApp9May.csproj" />
+</Solution>
