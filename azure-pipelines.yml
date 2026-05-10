@@ -28,9 +28,8 @@ steps:
 - task: FileTransform@2
   displayName: 'JSON Variable Substitution'
   inputs:
-    # Changed from DefaultWorkingDirectory to ArtifactStagingDirectory to match the publish output
-    folderPath: '$(Build.ArtifactStagingDirectory)' 
-    xmlTransformationRules: ''
+    folderPath: '$(Build.ArtifactStagingDirectory)/**/*.zip' # Target the zip specifically
+    enableJsonTransform: true
     jsonTargetFiles: '**/appsettings.json'
 
 - task: PublishBuildArtifacts@1
