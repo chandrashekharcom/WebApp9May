@@ -32,6 +32,11 @@ steps:
     enableXmlTransform: false
     enableJsonTransform: true
     jsonTargetFiles: '**/appsettings.json'
+- task: PublishBuildArtifacts@1
+  inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Azure subscription 1(1)(625ce2b7-370d-4af7-9bee-bcceae4ca23b)'
