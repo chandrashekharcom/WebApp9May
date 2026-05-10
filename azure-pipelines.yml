@@ -29,8 +29,7 @@ steps:
 - task: FileTransform@2
   inputs:
     folderPath: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-    enableXmlTransform: false
-    enableJsonTransform: true
+    xmlTransformationRules: ''
     jsonTargetFiles: '**/appsettings.json'
 - task: PublishBuildArtifacts@1
   inputs:
