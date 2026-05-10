@@ -1,8 +1,3 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 trigger:
 - master
 
@@ -10,25 +5,46 @@ pool:
   vmImage: windows-latest
 
 variables:
-  projectPath: '$(Build.SourcesDirectory)/WebApp9May/WebApp9May.csproj'
+  projectPath: '**/WebApp9May.csproj' # Simplified for flexibility
   buildConfiguration: 'Release'
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: 'Build Project'
   inputs:
-    azureSubscription: 'Azure subscription 1(625ce2b7-370d-4af7-9bee-bcceae4ca23b)'
     command: 'build'
     projects: '$(projectPath)'
     arguments: '--configuration $(buildConfiguration)'
+
 - task: DotNetCoreCLI@2
+  displayName: 'Publish Project'
   inputs:
-    azureSubscription: 'Azure subscription 1(1)(625ce2b7-370d-4af7-9bee-bcceae4ca23b)'
     command: 'publish'
     publishWebProjects: true
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory))'
+    # Fixed the extra parenthesis at the end of $(Build.ArtifactStagingDirectory)
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true 
+
 - task: FileTransform@2
+  displayName: 'JSON Variable Substitution'
   inputs:
-     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-     enableXmlTransform: false
-     enableJsonTransform: true
-     jsonTargetFiles: '**/appsettings.json'
+    # Changed from DefaultWorkingDirectory to ArtifactStagingDirectory to match the publish output
+    folderPath: '$(Build.ArtifactStagingDirectory)' 
+    xmlTransformationRules: ''
+    jsonTargetFiles: '**/appsettings.json'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Upload Artifacts'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- task: AzureWebApp@1
+  displayName: 'Deploy to Azure Web App'
+  inputs:
+    azureSubscription: 'Azure subscription 1(1)(625ce2b7-370d-4af7-9bee-bcceae4ca23b)'
+    appType: 'webApp'
+    appName: 'WebApp101'
+    # Points to the zip file created in the staging directory
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
