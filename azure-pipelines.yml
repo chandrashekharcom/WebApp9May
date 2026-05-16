@@ -44,6 +44,6 @@ steps:
   inputs:
     azureSubscription: 'azure-Demo-Conn'
     appType: 'webApp'
-    appName: 'webapp101'
+    appName: 'Webapp101'
     package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     deploymentMethod: 'auto'
