@@ -42,8 +42,8 @@ steps:
 - task: AzureWebApp@1
   displayName: 'Deploy to Azure Web App'
   inputs:
-    azureSubscription: 'Azure subscription 1(1)(625ce2b7-370d-4af7-9bee-bcceae4ca23b)'
+    azureSubscription: 'azure-Demo-Conn'
     appType: 'webApp'
-    appName: 'WebApp101'
-    # Points to the zip file created in the staging directory
+    appName: 'webapp101'
     package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
