@@ -19,11 +19,10 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Publish Project'
   inputs:
+    azureSubscription: 'azure-Demo-Conn'
     command: 'publish'
     publishWebProjects: true
-    # Fixed the extra parenthesis at the end of $(Build.ArtifactStagingDirectory)
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: true 
 
 - task: FileTransform@2
   displayName: 'JSON Variable Substitution'
@@ -39,11 +38,11 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-- task: AzureWebApp@1
-  displayName: 'Deploy to Azure Web App'
-  inputs:
-    azureSubscription: 'azure-Demo-Conn'
-    appType: 'webApp'
-    appName: 'Webapp101'
-    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-    deploymentMethod: 'auto'
+# - task: AzureWebApp@1
+#   displayName: 'Deploy to Azure Web App'
+#   inputs:
+#     azureSubscription: 'azure-Demo-Conn'
+#     appType: 'webApp'
+#     appName: 'Webapp101'
+#     package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+#     deploymentMethod: 'auto'
