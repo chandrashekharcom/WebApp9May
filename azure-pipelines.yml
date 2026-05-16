@@ -39,11 +39,11 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-- task: AzureWebApp@1
-  displayName: 'Deploy to Azure Web App'
-  inputs:
-    azureSubscription: 'azure-Demo-Conn'
-    appType: 'webApp'
-    appName: 'Webapp101'
-    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-    deploymentMethod: 'auto'
+# - task: AzureWebApp@1
+#   displayName: 'Deploy to Azure Web App'
+#   inputs:
+#     azureSubscription: 'azure-Demo-Conn'
+#     appType: 'webApp'
+#     appName: 'Webapp101'
+#     package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+#     deploymentMethod: 'auto'
