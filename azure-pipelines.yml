@@ -2,8 +2,8 @@ trigger:
 - master
 
 pool:
- name:"DefaultPool"
- vmImage:"CHANDRASHEKHAR"
+ name: 'Default'
+ vmImage: "CHANDRASHEKHAR"
 
 variables:
   projectPath: '**/WebApp9May.csproj' # Simplified for flexibility
