@@ -5,7 +5,8 @@ pool:
   vmImage: windows-latest
 
 variables:
-  projectPath: '$(Build.SourceDirectory)/WebApp9May/WebApp9May.csproj'
+  # This will find any .csproj file in the entire repository
+  projectPath: '**/*.csproj' 
   buildConfiguration: 'Release'
 
 steps:
