@@ -9,16 +9,17 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-  task : DotNetCoreCLI@2
+- task: DotNetCoreCLI@2
   inputs:
     azureSubscription: 'Azure subscription 1(625ce2b7-370d-4af7-9bee-bcceae4ca23b)'
     command: 'build'
     projects: '$(projectPath)'
     arguments: '--configuration $(buildConfiguration)'
 
-  task: DotNetCoreCLI@2
+- task: DotNetCoreCLI@2
   inputs:
     azureSubscription: 'Azure subscription 1(625ce2b7-370d-4af7-9bee-bcceae4ca23b)'
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(buildConfiguration) --output  $(Build.ArtifactStagingDirectory)'
+    
