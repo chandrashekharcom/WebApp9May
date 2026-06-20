@@ -23,7 +23,7 @@ steps:
     arguments: '--configuration $(buildConfiguration) --output  $(Build.ArtifactStagingDirectory)'
 - task: FileTransform@2
   inputs:
-    folderPath: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    folderPath: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     enableJsonTransform: true
     jsonTargetFiles: '**/appsettings.json'
 
@@ -38,5 +38,5 @@ steps:
     azureSubscription: 'Azure subscription 1(625ce2b7-370d-4af7-9bee-bcceae4ca23b)'
     appType: 'webApp'
     appName: 'webapp101'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     deploymentMethod: 'auto'
