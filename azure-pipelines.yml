@@ -6,7 +6,7 @@ pool:
 
 variables:
   # This will find any .csproj file in the entire repository
-  projectPath: '**/*.csproj' 
+  projectPath: '**/*.csproj'   #WebApp9May/WebApp9May.csproj
   buildConfiguration: 'Release'
 
 steps:
@@ -21,4 +21,22 @@ steps:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(buildConfiguration) --output  $(Build.ArtifactStagingDirectory)'
-    
+- task: FileTransform@2
+  inputs:
+    folderPath: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    enableJsonTransform: true
+    jsonTargetFiles: '**/appsettings.json'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(625ce2b7-370d-4af7-9bee-bcceae4ca23b)'
+    appType: 'webApp'
+    appName: 'webapp101'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
